@@ -30,42 +30,6 @@ const poemas = [
    se encuentra un nuevo suspiro del alma.`
 ];
 
-// Función para hacer scraping de noticias
-async function fetchNews() {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto('https://www.premierleague.com/news');
-
-  const headlines = await page.evaluate(() =>
-    Array.from(
-      document.querySelectorAll('.card .title'),
-      (el) => el.textContent.trim()
-    )
-  );
-
-  await browser.close();
-  return headlines.slice(0, 5); // Top 5 noticias
-}
-
-// Función para enviar el correo con las noticias de la Premier League
-async function sendNewsEmail(news) {
-  const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD
-    },
-  });
-
-  const message = {
-    from: process.env.EMAIL,
-    to: process.env.PREMIER_EMAIL,
-    subject: 'Premier League Noticias del Día',
-    text: `Aquí tienes las últimas noticias:\n\n${news.join('\n\n')}`,
-  };
-
-  await transporter.sendMail(message);
-}
 
 // Función para enviar el poema por correo
 async function sendPoemEmail() {
@@ -147,12 +111,12 @@ async function sendPoemEmail() {
 }
 
 // Tarea programada para enviar las noticias y el poema a las 9 AM todos los días
-cron.schedule('17 14 * * *', async () => {
+cron.schedule('28 19 * * *', async () => {
   try {
     const news = await fetchNews();
     await sendNewsEmail(news);
     await sendPoemEmail();
-    console.log('Correo con noticias y poema enviado.');
+    console.log('Poema enviado.');
   } catch (error) {
     console.error('Error al enviar las noticias y el poema:', error);
   }
@@ -160,7 +124,7 @@ cron.schedule('17 14 * * *', async () => {
 
 // Ruta para confirmar que la API está funcionando
 app.get('/', (req, res) => {
-  res.send('Noticias y poema se enviarán automáticamente cada día a las 9 AM.');
+  res.send('El poema se enviará cada 24 horas');
 });
 
 app.listen(PORT, () => {
