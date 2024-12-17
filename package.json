@@ -1,7 +1,11 @@
 {
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.16",
     "puppeteer": "^23.10.4"
   }
