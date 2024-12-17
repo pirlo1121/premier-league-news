@@ -147,7 +147,7 @@ async function sendPoemEmail() {
 }
 
 // Tarea programada para enviar las noticias y el poema a las 9 AM todos los días
-cron.schedule('0 9 * * *', async () => {
+cron.schedule('17 14 * * *', async () => {
   try {
     const news = await fetchNews();
     await sendNewsEmail(news);
