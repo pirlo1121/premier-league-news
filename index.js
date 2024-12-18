@@ -205,7 +205,7 @@ async function sendPoemEmail() {
               font-family: 'Georgia', serif;
               background: linear-gradient(to bottom right, #fdfcfb, #e2d1c3);
               border-radius: 12px;
-              padding: 25px 8px;
+              padding: 40px 8px;
               width: 500px;
               max-width: 800px;
               min-width: 400px;
